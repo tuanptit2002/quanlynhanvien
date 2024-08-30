@@ -68,7 +68,7 @@ public class TableTimeService {
         return "Check out access";
     }
 
-    public Page<TableTime> getTableTimes(Pageable pageable, String maNv) {
+    public Page<TableTime> getTableTimes(Pageable pageable, String maNv, int month, int year) {
 
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = principal instanceof UserDetails ? ((UserDetails) principal).getUsername() : principal.toString();
@@ -81,14 +81,13 @@ public class TableTimeService {
         }
         if (user.getUsername().equals(username) || isAdmin) {
 
-            Page<TableTime> tableTimes = tableTimeRepository.getTableTime(pageable, maNv);
+            Page<TableTime> tableTimes = tableTimeRepository.getTableTime(pageable, maNv, month, year);
             return tableTimes;
         } else throw new RuntimeException("Bạn không có quyền truy cập thông tin người dùng này!");
     }
 
 
     public String deleteTableTime(Long id){
-
         TableTime tableTime = tableTimeRepository.findById(id).get();
         tableTimeRepository.delete(tableTime);
         return "Xoa thanh cong";

@@ -28,9 +28,11 @@ public class TableTimeController {
     @GetMapping("/get/table-time/{maNv}")
     public Page<TableTime> getUsers(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
+                                    @RequestParam int month,
+                                    @RequestParam int year,
                                     @PathVariable String maNv) {
         Pageable pageable = PageRequest.of(page, size);
-        return tableTimeService.getTableTimes(pageable, maNv);
+        return tableTimeService.getTableTimes(pageable, maNv, month, year);
     }
 
     @DeleteMapping("/{id}")
