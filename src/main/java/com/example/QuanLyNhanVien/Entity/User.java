@@ -18,6 +18,7 @@ public class User implements UserDetails {
 
     @Id
     private String maNv;
+    @Column(unique = true)
     private String username;
     private String password;
     private String fullName;
