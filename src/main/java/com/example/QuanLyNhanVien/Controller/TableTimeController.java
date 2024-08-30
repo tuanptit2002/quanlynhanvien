@@ -1,0 +1,40 @@
+package com.example.QuanLyNhanVien.Controller;
+
+import com.example.QuanLyNhanVien.Entity.TableTime;
+import com.example.QuanLyNhanVien.Service.TableTimeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/v1/table-time")
+public class TableTimeController {
+
+    @Autowired
+    TableTimeService tableTimeService;
+
+    @PostMapping("/check-in/{maNv}")
+    public String checkIn(@PathVariable String maNv){
+       return tableTimeService.CheckIn(maNv);
+    }
+
+    @PostMapping("/check-out/{maNv}")
+    public String checkOut(@PathVariable String maNv){
+        return tableTimeService.checkOut(maNv);
+    }
+
+    @GetMapping("/get/table-time/{maNv}")
+    public Page<TableTime> getUsers(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "10") int size,
+                                    @PathVariable String maNv) {
+        Pageable pageable = PageRequest.of(page, size);
+        return tableTimeService.getTableTimes(pageable, maNv);
+    }
+
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable Long id){
+        return tableTimeService.deleteTableTime(id);
+    }
+}
