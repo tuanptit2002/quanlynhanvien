@@ -1,5 +1,6 @@
 package com.example.QuanLyNhanVien.Controller;
 
+import com.example.QuanLyNhanVien.Dto.ResponseDto;
 import com.example.QuanLyNhanVien.Entity.TableTime;
 import com.example.QuanLyNhanVien.Service.TableTimeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +17,17 @@ public class TableTimeController {
     TableTimeService tableTimeService;
 
     @PostMapping("/check-in/{maNv}")
-    public String checkIn(@PathVariable String maNv){
-       return tableTimeService.CheckIn(maNv);
+    public ResponseDto<?> checkIn(@PathVariable String maNv) {
+        return tableTimeService.CheckIn(maNv);
     }
 
     @PostMapping("/check-out/{maNv}")
-    public String checkOut(@PathVariable String maNv){
+    public ResponseDto<?> checkOut(@PathVariable String maNv) {
         return tableTimeService.checkOut(maNv);
     }
 
     @GetMapping("/get/table-time/{maNv}")
-    public Page<TableTime> getUsers(@RequestParam(defaultValue = "0") int page,
+    public ResponseDto<Page<TableTime>> getUsers(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,
                                     @RequestParam int month,
                                     @RequestParam int year,
@@ -36,7 +37,7 @@ public class TableTimeController {
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable Long id){
+    public ResponseDto<?> delete(@PathVariable Long id) {
         return tableTimeService.deleteTableTime(id);
     }
 }

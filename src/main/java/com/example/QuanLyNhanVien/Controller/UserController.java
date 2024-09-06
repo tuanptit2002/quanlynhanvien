@@ -2,6 +2,7 @@ package com.example.QuanLyNhanVien.Controller;
 
 import com.example.QuanLyNhanVien.Config.JwtTokenProvider;
 import com.example.QuanLyNhanVien.Dto.AuthenticationResponse;
+import com.example.QuanLyNhanVien.Dto.ResponseDto;
 import com.example.QuanLyNhanVien.Dto.RoleDTO;
 import com.example.QuanLyNhanVien.Dto.UserDTO;
 import com.example.QuanLyNhanVien.Entity.Role;
@@ -38,8 +39,8 @@ public class UserController {
     JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
-    public AuthenticationResponse loginUser(@RequestBody UserDTO userDTO){
-        UsernamePasswordAuthenticationToken token =new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword());
+    public AuthenticationResponse loginUser(@RequestBody UserDTO userDTO) {
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(userDTO.getUsername(), userDTO.getPassword());
         Authentication authentication = authenticationManager.authenticate(token);
         User user = (User) authentication.getPrincipal();
         String jwt = jwtTokenProvider.generateToken(user);
@@ -52,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public String addUser(@RequestBody UserDTO userDTO) {
+    public ResponseDto<?> addUser(@RequestBody UserDTO userDTO) {
         User user = new User();
         user.setFullName(userDTO.getFullName());
         user.setMaNv(userDTO.getMaNV());
